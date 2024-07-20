@@ -1,4 +1,7 @@
 import { program } from "commander";
+
+import * as contactsList from "./contacts.js";
+
 program
   .option("-a, --action <type>", "choose action")
   .option("-i, --id <type>", "user id")
@@ -10,24 +13,23 @@ program.parse();
 
 const options = program.opts();
 
-// TODO: рефакторити
 async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case "list":
-      // ...
-      break;
+      const allContacts = await contactsList.listContacts();
+      return console.log(allContacts);
 
     case "get":
-      // ... id
-      break;
+      const getContact = await contactsList.getContactById(id);
+      return console.log(getContact);
 
     case "add":
-      // ... name email phone
-      break;
+      const addContact = await contactsList.addContact(name, email, phone);
+      return console.log(addContact);
 
     case "remove":
-      // ... id
-      break;
+      const removeContact = await contactsList.removeContact(id);
+      return console.log(removeContact);
 
     default:
       console.warn("\x1B[31m Unknown action type!");
