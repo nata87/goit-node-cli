@@ -29,13 +29,15 @@ async function invokeAction({ action, id, name, email, phone }) {
 
     case "remove":
       const removeContact = await contactsList.removeContact(id);
-      return console.log(removeContact);
-
+      if (removeContact) {
+        console.log("Removed contact:", removeContact);
+      } else {
+        console.log(`Contact with ID ${id} not found.`);
+      }
+      break;
     default:
       console.warn("\x1B[31m Unknown action type!");
   }
 }
 
 invokeAction(options);
-
-console.log("%o", String);
